@@ -11,6 +11,7 @@ from getpass import getpass
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
+#from webdriver_manager.chrome import ChromeDriverManager
 
 # ------------------------------------------------------------------------------
 # Login and goto postbox
@@ -26,6 +27,7 @@ def cddlLogin():
         }
     )
     driver        = webdriver.Chrome('/usr/bin/chromedriver', options = chromeOptions)
+    #driver        = webdriver.Chrome(ChromeDriverManager().install(), options = chromeOptions)
     comdirectUrl  = 'https://kunde.comdirect.de/lp/wt/login?execution=e1s1&afterTimeout=true'
     postBoxUrl    = 'https://kunde.comdirect.de/itx/posteingangsuche'
     driver.get(comdirectUrl);
@@ -40,7 +42,7 @@ def cddlLogin():
     t = 0
     while t <= tMaxCookie:
         try:
-            cookieButton = driver.find_element_by_id('closeCookieBanner')
+            cookieButton = driver.find_element_by_id('privacy-init-wall-button-accept')
             cookieButton.click()
             break
         except:
@@ -133,7 +135,7 @@ def cddlGetPdf(driver):
                 if len(x) == 1:                         # Normal PDF download
                     cntPdf = cntPdf + 1
                     driver.get(pdfUrl)
-                    sleep(0.1)
+                    sleep(0.3)
                     print('Get  {:4d}: {:s}'.format(cntPdf, pdfUrlShort))
                 else:                                   # Skip possibly HTML
                     cntHtml = cntHtml + 1
@@ -157,7 +159,7 @@ def cddlGetPdf(driver):
 
             # Check if there is another right button - stop if not
             try:
-                rightbutton = driver.find_element_by_css_selector("a[id='f1-j_idt123_right']")
+                rightbutton = driver.find_element_by_css_selector("a[id='f1-j_idt124_right']")
             except:
                 print('----------------------------------------------')
                 print('Downloaded -> {:5d} documents'.format(cntPdf))
