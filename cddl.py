@@ -2,7 +2,6 @@
 # Set download path etc...
 downLoadPath  = '/your/download/directory'
 zugangsNummer = '012345678'
-gotoArchive   = False
 
 # ------------------------------------------------------------------------------
 # Misc imports
@@ -72,22 +71,6 @@ def cddlLogin():
             cnt = cnt + 1
             print('Wait for postbox {:3d} sec'.format(cnt))
             sleep(1)
-
-    # Enable this if you want to go to the archive
-    if gotoArchive:
-
-        # Find Archiv button
-        archivLink = driver.find_element_by_link_text('Archiv')
-        archivLink.click()
-
-        # Select GESAMTER_ZEITRAUM
-        zeitraumSelect = driver.find_element_by_id('f1-zeitraumInput_pbInput')
-        selectField    = webdriver.support.ui.Select(zeitraumSelect)
-        selectField.select_by_value('GESAMTER_ZEITRAUM')
-
-        # Start search
-        suchenField = driver.find_element_by_link_text('Suchen')
-        suchenField.click()
 
     return driver
 
